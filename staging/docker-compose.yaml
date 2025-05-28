@@ -1,0 +1,21 @@
+services:
+  utazon:
+    image: dirdros/utazon-portfolio:latest
+    container_name: utazon-staging
+    expose:
+      - 80
+    networks:
+      - traefik_public
+    restart: always
+    environment:
+      - UTAZON_DOMAIN_STAGING=${UTAZON_DOMAIN_STAGING}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.utazon-staging.rule=Host(`${UTAZON_DOMAIN_STAGING}`)"
+      - "traefik.http.routers.utazon-staging.tls=true"
+      - "traefik.http.routers.utazon-staging.entrypoints=web,websecure"
+      - "traefik.http.routers.utazon-staging.tls.certresolver=letsencrypt"
+      - "traefik.http.services.utazon-staging.loadbalancer.server.port=80"
+networks:
+  traefik_public:
+    external: true

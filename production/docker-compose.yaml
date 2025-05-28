@@ -1,0 +1,21 @@
+services:
+  utazon:
+    image: dirdros/utazon-portfolio:latest
+    container_name: utazon-production
+    expose:
+      - 80
+    networks:
+      - traefik_public
+    restart: always
+    environment:
+      - UTAZON_DOMAIN_PRODUCTION=${UTAZON_DOMAIN_PRODUCTION}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.utazon-production.rule=Host(`${UTAZON_DOMAIN_PRODUCTION}`)"
+      - "traefik.http.routers.utazon-production.tls=true"
+      - "traefik.http.routers.utazon-production.entrypoints=web,websecure"
+      - "traefik.http.routers.utazon-production.tls.certresolver=letsencrypt"
+      - "traefik.http.services.utazon-production.loadbalancer.server.port=80"
+networks:
+  traefik_public:
+    external: true
