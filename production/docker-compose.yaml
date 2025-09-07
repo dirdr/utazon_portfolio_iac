@@ -2,13 +2,12 @@
 services:
   # Sitemap generator (init container)
   utazon-sitemap-production:
-    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}-sitemap
     container_name: ${APP_NAME}-sitemap-production
-    command: ["npm", "run", "sitemap:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
     volumes:
-      - sitemap_production:/app
+      - sitemap_production:/usr/share/nginx/html/seo
     networks:
       - traefik_public
     restart: "no"  # Run once and exit
@@ -17,13 +16,12 @@ services:
 
   # Robots.txt generator (init container)
   utazon-robots-production:
-    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}-robots
     container_name: ${APP_NAME}-robots-production
-    command: ["npm", "run", "robots:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
     volumes:
-      - sitemap_production:/app
+      - sitemap_production:/usr/share/nginx/html/seo
     networks:
       - traefik_public
     restart: "no"  # Run once and exit

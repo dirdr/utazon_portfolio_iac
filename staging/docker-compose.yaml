@@ -2,13 +2,12 @@
 services:
   # Sitemap generator (init container)
   utazon-sitemap-staging:
-    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}-sitemap
     container_name: ${APP_NAME}-sitemap-staging
-    command: ["npm", "run", "sitemap:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_STAGING}
     volumes:
-      - sitemap_staging:/app
+      - sitemap_staging:/usr/share/nginx/html/seo
     networks:
       - traefik_public
     restart: "no"  # Run once and exit
@@ -17,13 +16,12 @@ services:
 
   # Robots.txt generator (init container)
   utazon-robots-staging:
-    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}-robots
     container_name: ${APP_NAME}-robots-staging
-    command: ["npm", "run", "robots:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_STAGING}
     volumes:
-      - sitemap_staging:/app
+      - sitemap_staging:/usr/share/nginx/html/seo
     networks:
       - traefik_public
     restart: "no"  # Run once and exit
