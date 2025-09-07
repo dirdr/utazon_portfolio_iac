@@ -5,7 +5,9 @@ services:
   utazon-sitemap-production:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-sitemap-production
-    target: sitemap-generator  # Use the sitemap-generator stage from Dockerfile
+    build:
+      context: .
+      target: sitemap-generator
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
     volumes:
@@ -20,7 +22,9 @@ services:
   utazon-robots-production:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-robots-production
-    target: robots-generator  # Use the robots-generator stage from Dockerfile
+    build:
+      context: .
+      target: robots-generator
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
     volumes:
