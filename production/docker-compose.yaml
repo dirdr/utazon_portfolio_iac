@@ -35,7 +35,7 @@ services:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-production
     volumes:
-      - sitemap_production:/usr/share/nginx/html:ro
+      - sitemap_production:/usr/share/nginx/html/seo:ro
     expose:
       - 80
     networks:
