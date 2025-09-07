@@ -9,7 +9,7 @@ services:
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
     volumes:
-      - sitemap_production:/app/sitemaps
+      - sitemap_production:/app
     networks:
       - traefik_public
     restart: "no"  # Run once and exit
@@ -23,7 +23,7 @@ services:
     depends_on:
       - utazon-sitemap-production
     volumes:
-      - sitemap_production:/usr/share/nginx/html/sitemaps:ro
+      - sitemap_production:/usr/share/nginx/html:ro
     expose:
       - 80
     networks:
