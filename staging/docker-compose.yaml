@@ -1,13 +1,10 @@
-version: '3.8'
 
 services:
   # Sitemap generator (init container)
   utazon-sitemap-staging:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-sitemap-staging
-    build:
-      context: .
-      target: sitemap-generator
+    command: ["npm", "run", "sitemap:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_STAGING}
     volumes:
@@ -22,9 +19,7 @@ services:
   utazon-robots-staging:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-robots-staging
-    build:
-      context: .
-      target: robots-generator
+    command: ["npm", "run", "robots:docker"]
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_STAGING}
     volumes:
@@ -39,8 +34,6 @@ services:
   utazon-staging:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
     container_name: ${APP_NAME}-staging
-    depends_on:
-      - utazon-sitemap-staging
     volumes:
       - sitemap_staging:/usr/share/nginx/html:ro
     expose:
