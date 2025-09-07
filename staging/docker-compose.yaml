@@ -16,6 +16,21 @@ services:
     profiles:
       - init  # Use profile to control when this runs
 
+  # Robots.txt generator (init container)
+  utazon-robots-staging:
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    container_name: ${APP_NAME}-robots-staging
+    target: robots-generator  # Use the robots-generator stage from Dockerfile
+    environment:
+      - VITE_SITE_URL=https://${UTAZON_DOMAIN_STAGING}
+    volumes:
+      - sitemap_staging:/app
+    networks:
+      - traefik_public
+    restart: "no"  # Run once and exit
+    profiles:
+      - init  # Use profile to control when this runs
+
   # Main application
   utazon-staging:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}

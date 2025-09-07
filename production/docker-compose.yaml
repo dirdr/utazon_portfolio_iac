@@ -16,6 +16,21 @@ services:
     profiles:
       - init  # Use profile to control when this runs
 
+  # Robots.txt generator (init container)
+  utazon-robots-production:
+    image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
+    container_name: ${APP_NAME}-robots-production
+    target: robots-generator  # Use the robots-generator stage from Dockerfile
+    environment:
+      - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
+    volumes:
+      - sitemap_production:/app
+    networks:
+      - traefik_public
+    restart: "no"  # Run once and exit
+    profiles:
+      - init  # Use profile to control when this runs
+
   # Main application
   utazon-production:
     image: ${DOCKER_USERNAME}/${APP_NAME}:${IMAGE_VERSION}
