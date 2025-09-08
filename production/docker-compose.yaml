@@ -6,6 +6,7 @@ services:
     container_name: ${APP_NAME}-sitemap-production
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
+      - NODE_ENV=production
     volumes:
       - sitemap_production:/usr/share/nginx/html/seo
     networks:
@@ -20,6 +21,7 @@ services:
     container_name: ${APP_NAME}-robots-production
     environment:
       - VITE_SITE_URL=https://${UTAZON_DOMAIN_PRODUCTION}
+      - NODE_ENV=production
     volumes:
       - sitemap_production:/usr/share/nginx/html/seo
     networks:
